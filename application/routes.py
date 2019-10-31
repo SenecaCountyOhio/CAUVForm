@@ -3,7 +3,7 @@ from flask_login import login_required, logout_user, current_user, login_user
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import SigninForm, SignupForm, taskForm, notebookForm
-from .models import db, User, Todo, Notebooks
+from .models import db, User, CAUVApp
 from . import login_manager
 
 @login_manager.user_loader
@@ -18,6 +18,7 @@ def base():
     return redirect('/signin')
 
 @app.route('/signup', methods=['GET', 'POST'])
+@login_required
 def signup():
     """Signup Form."""
     signup_form = SignupForm()

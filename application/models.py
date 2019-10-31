@@ -11,23 +11,25 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-class Todo(db.Model):
+class CAUVApp(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), nullable=False)
-    content = db.Column(db.String(200), nullable=False)
-    check = db.Column(db.Boolean(), default=False, nullable=False)
-    notebook = db.Column(db.String(30), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    completed = db.Column(db.Boolean(), default=False, nullable=False)
+    user = db.Column(db.String(30), nullable=False)
+    AG_APP = db.Column(db.Integer, nullable=False)
+    Parcel_Change_Check = db.Column(db.Boolean, default=False, nullable=False)
+    Parcels_Combined_Acres = db.Column(db.Float, nullable=False)
+    Commodity_Acres = db.Column(db.Float, nullable=False)
+    Hay_Acres = db.Column(db.Float, nullable=False)
+    Perm_Pasture_Acres = db.Column(db.Float, nullable=False)
+    Noncommercial_Wood_Acres = db.Column(db.Float, nullable=False)
+    Commerical_Wood_Acres = db.Column(db.Float, nullable=False)
+    Other_Crop_Acres = db.Column(db.Float, nullable=False)
+    Homesite_Acres = db.Column(db.Float, nullable=False)
+    Road_Waste_Pond_Acres = db.Column(db.Float, nullable=False)
+    CRP_Acres = db.Column(db.Float, nullable=False)
+    Con25_Acres = db.Column(db.Float, nullable=False)
+    Other_Use_Acres = db.Column(db.Float, nullable=False)
+    Stated_Total_Acres = db.Column(db.Float, nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<Task %r>' % self.id
-
-class Notebooks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), nullable=False)
-    notebook = db.Column(db.String(30), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Notebook %r' % self.notebook
+        return '<Ag App Number %r>' % self.AG_APP
