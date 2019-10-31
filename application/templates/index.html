@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>My Five</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form">
+    <h1>My Five</h1>
+    <p>
+      Notebook:
+    <a href="/notebooks" class="notebook_link">
+      {{notebook.notebook}}
+    </a>
+    </p>
+      <form action="/dashboard/{{notebook.id}}" method="POST">
+        <input type="text" class="form-control" name="content" placeholder="Add Task">
+        <!--<input id="submit" type="submit" value="Add Task">-->
+      </form>
+      {% if tasks|length == 0 %}
+      {% else %}
+      <form action="/update_notebook/{{notebook.id}}" method="POST">
+        <table>
+          {% for task in tasks %}
+          <tr>
+            <td>
+              <a href="/check/{{task.id}}/{{notebook.id}}">
+                {% if task.check == 1 %}
+                  {{ form.checkbox(class="checkbox", checked="checked") }}
+                {% else %}
+                  {{ form.checkbox(class="checkbox") }}
+                {% endif %}
+              </a>
+          <!--<a href="/update/{{task.id}}" class="task_actions">
+            <p>Edit</p>
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <a href="/delete/{{task.id}}" class="task_actions">
+            <p>Delete</p>
+            <i class="far fa-trash-alt"></i>
+          </a>-->
+            </td>
+            <td>{{ task.content }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        <input id="submit" type="submit" value="Update Notebook">
+      </form>
+      {% endif %}
+    <div class="sign_link">
+    <a href="/logout">Log Out</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

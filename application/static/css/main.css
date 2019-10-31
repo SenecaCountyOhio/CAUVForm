@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  font-family: 'Oxygen', sans-serif;
+  background-color: hsl(203, 27%, 18%);
+  font-size: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+}
+
+.sign_logo {
+  letter-spacing: 5px;
+}
+
+.sign_title {
+  margin: auto;
+}
+
+.form {
+  padding: 2%;
+  border: 1px solid hsla(0, 0%, 71%, 1);
+  border-radius: 8px;
+  background-color: white;
+  margin: auto;
+  min-width: 300px;
+}
+
+.form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  padding: 8px;
+}
+
+.form-control{
+  width: 100%;
+  height: 18px;
+  padding-top: 20px;
+  padding-bottom: 1px;
+  border: none;
+  border-bottom: 2px solid hsla(0, 0%, 71%, 1);
+  color: hsla(0, 0%, 41%, 1);
+}
+
+.form-control:hover{
+  border-bottom: 2px solid hsla(0, 0%, 41%, 1);
+}
+
+.form-control:focus{
+  border-bottom: 2px solid hsla(0, 0%, 41%, 1);
+}
+
+#submit{
+  color: hsla(0, 0%, 71%, 1);
+  font-size: 16px;
+  background-color: hsla(0, 0%, 100%, 1);
+  padding: 12px 20px;
+  /*width: 100%;*/
+  border: 2px solid hsla(0, 0%, 71%, 1);
+  border-radius: 4px;
+  margin-top: 20px;
+}
+#submit:hover{
+  color: hsla(0, 0%, 41%, 1);
+  font-size: 16px;
+  background-color: hsla(0, 0%, 100%, 1);
+  padding: 12px 20px;
+  /*width: 100%;*/
+  border: 2px solid hsla(0, 0%, 41%, 1);
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+#content {
+  width: 100%;
+}
+
+.sign_link{
+  margin: auto;
+  text-align: center;
+  font-size: 12px;
+  padding: 40px;
+  padding-bottom: 0px;
+  flex-grow: 1;
+}
+
+.sign_link a{
+  color: hsla(0, 0%, 41%, 1);
+}
+
+.notebook_link{
+  color: hsla(0, 0%, 71%, 1);
+}
+
+.notebook_link:hover{
+  color: hsla(0, 0%, 41%, 1);
+}
+
+td {
+  padding: 8px;
+  text-align: left;
+  max-width: 500px;
+  overflow-wrap: break-word;
+}
+
+.checkbox{
+  width: 20px;
+  height: 20px;
+}
