@@ -1,53 +1,86 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>My Five</title>
+<title>Seneca County CAUV Form</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
   <div class="form">
-    <h1>My Five</h1>
-    <p>
-      Notebook:
-    <a href="/notebooks" class="notebook_link">
-      {{notebook.notebook}}
-    </a>
+    <h1>CAUV Renewal Application Form</h1>
+    <p> APP#:
+      <a href="/notebooks" class="notebook_link">
+        {{ apps.AG_APP }}
+      </a>
     </p>
-      <form action="/dashboard/{{notebook.id}}" method="POST">
-        <input type="text" class="form-control" name="content" placeholder="Add Task">
-        <!--<input id="submit" type="submit" value="Add Task">-->
-      </form>
-      {% if tasks|length == 0 %}
-      {% else %}
-      <form action="/update_notebook/{{notebook.id}}" method="POST">
+    <div>
+      <form class="" method="post">
         <table>
-          {% for task in tasks %}
+          <th>Anticipated land use for the current year</th>
+          <th>Previous Acres</th>
+          <th>Current Acres</th>
           <tr>
-            <td>
-              <a href="/check/{{task.id}}/{{notebook.id}}">
-                {% if task.check == 1 %}
-                  {{ form.checkbox(class="checkbox", checked="checked") }}
-                {% else %}
-                  {{ form.checkbox(class="checkbox") }}
-                {% endif %}
-              </a>
-          <!--<a href="/update/{{task.id}}" class="task_actions">
-            <p>Edit</p>
-            <i class="fas fa-pencil-alt"></i>
-          </a>
-          <a href="/delete/{{task.id}}" class="task_actions">
-            <p>Delete</p>
-            <i class="far fa-trash-alt"></i>
-          </a>-->
-            </td>
-            <td>{{ task.content }}</td>
+            <td>{{ form.Commodity_Acres.label }}</td>
+            <td>{{ apps.Commodity_Acres }}</td>
+            <td>{{ form.Commodity_Acres }}</td>
           </tr>
-          {% endfor %}
+          <tr>
+            <td>{{ form.Hay_Acres.label }}</td>
+            <td>{{ apps.Hay_Acres }}</td>
+            <td>{{ form.Hay_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Perm_Pasture_Acres.label }}</td>
+            <td>{{ apps.Perm_Pasture_Acres }}</td>
+            <td>{{ form.Perm_Pasture_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Noncommercial_Wood_Acres.label }}</td>
+            <td>{{ apps.Noncommercial_Wood_Acres }}</td>
+            <td>{{ form.Noncommercial_Wood_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Commerical_Wood_Acres.label }}</td>
+            <td>{{ apps.Commerical_Wood_Acres }}</td>
+            <td>{{ form.Commerical_Wood_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Other_Crop_Acres.label }}</td>
+            <td>{{ apps.Other_Crop_Acres }}</td>
+            <td>{{ form.Other_Crop_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Homesite_Acres.label }}</td>
+            <td>{{ apps.Homesite_Acres }}</td>
+            <td>{{ form.Homesite_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Road_Waste_Pond_Acres.label }}</td>
+            <td>{{ apps.Road_Waste_Pond_Acres }}</td>
+            <td>{{ form.Road_Waste_Pond_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.CRP_Acres.label }}</td>
+            <td>{{ apps.CRP_Acres }}</td>
+            <td>{{ form.CRP_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Con25_Acres.label }}</td>
+            <td>{{ apps.Con25_Acres }}</td>
+            <td>{{ form.Con25_Acres }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.Other_Use_Acres.label }}</td>
+            <td>{{ apps.Other_Use_Acres }}</td>
+            <td>{{ form.Other_Use_Acres }}</td>
+          </tr>
         </table>
-        <input id="submit" type="submit" value="Update Notebook">
-      </form>
-      {% endif %}
+      {{ form.submit }}
+    </form>
+    <form class="" action="/app_search">
+      <input type="submit" name="submit" id="submit" value="Go Back to Search">
+    </form>
+    </div>
     <div class="sign_link">
     <a href="/logout">Log Out</a>
     </div>

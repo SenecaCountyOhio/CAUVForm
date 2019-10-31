@@ -20,8 +20,14 @@ def create_app():
         from . import routes
         from . import models
         from . import forms
+        from .models import User
 
         # Create tables for our models
         db.create_all()
+        admin = User.query.filter(User.username == 'admin').all()
+        if len(admin) == 0:
+            admin = User(username='admin', password='admin')
+            db.session.add(admin)
+            db.session.commit()
 
         return app

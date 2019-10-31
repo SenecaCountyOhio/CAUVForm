@@ -2,7 +2,7 @@ from flask import redirect, render_template, flash, request, session, url_for
 from flask_login import login_required, logout_user, current_user, login_user
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
-from .forms import SigninForm, SignupForm, taskForm, notebookForm
+from .forms import SigninForm, SignupForm, AppSearch, CAUVForm
 from .models import db, User, CAUVApp
 from . import login_manager
 
@@ -43,7 +43,7 @@ def signin():
         user = User.query.filter(User.username == request.form['email']).first()
         if user.password == request.form['password']:
             login_user(user)
-            return redirect('/notebooks')
+            return redirect('/app_search')
     return render_template('signin.html', form=login_form)
 
 @app.route('/logout')
@@ -52,105 +52,31 @@ def logout():
     logout_user()
     return redirect('/signin')
 
-@app.route('/notebooks', methods=['POST', 'GET'])
+@app.route('/app_search', methods=['POST', 'GET'])
 @login_required
-def notebook():
+def app_search():
+    search_form = AppSearch()
+    error = []
     if request.method == 'POST':
-        notebook_name = request.form['content']
-        new_notebook = Notebooks(notebook=notebook_name, username=current_user.username)
-        try:
-            db.session.add(new_notebook)
-            db.session.commit()
-            return redirect('/notebooks')
-        except:
-            return "There was an issue adding your notebook"
+        search = request.form['search']
+        apps = CAUVApp.query.filter(CAUVApp.AG_APP == search).all()
+        if len(apps) == 0:
+            error = ['No Applications Found using ' + search]
+        else:
+            redirect = '/form' + str(apps.AG_APP)
+            return redirect(redirect)
+    return render_template('search.html', error=error, form=search_form)
 
-    else:
-        notebooks = Notebooks.query.filter(Notebooks.username == current_user.username)
-        return render_template('notebooks.html', notebooks=notebooks)
-
-@app.route('/dashboard/<int:id>', methods=['POST', 'GET'])
+@app.route('/form<int:id>', methods=['POST','GET'])
 @login_required
-def index(id):
-    notebook = Notebooks.query.get_or_404(id)
-    notebook_name = notebook.notebook
+def form(id):
+    app_form = CAUVForm()
+    apps = CAUVApp.query.filter(CAUVApp.AG_APP == id).all()
     if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Todo(
-            content=task_content,
-            username=current_user.username,
-            notebook=notebook_name,
-            completed=0)
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/dashboard/' + str(id))
-        except:
-            return 'There was an issue adding your task'
-    else:
-        tasks = Todo.query.filter(
-            Todo.username == current_user.username,
-            Todo.notebook == notebook_name,
-            Todo.completed == False).all()
-        task_form = taskForm()
-        return render_template('index.html', tasks=tasks, form=task_form, notebook=notebook)
+        pass
+    return render_template('index.html', apps=apps, form=app_form)
 
-@app.route('/delete/<int:id>')
-@login_required
-def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
-    try:
-        db.session.delete(task_to_delete)
-        db.session.commit()
-        return redirect('/dashboard/' + str(id))
-    except:
-        return 'There was a problem deleting that task'
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-@login_required
-def update(id):
-    task = Todo.query.get_or_404(id)
-    if request.method == 'POST':
-        task.content = request.form['content']
-        try:
-            db.session.commit()
-            return redirect('/dashboard/' + str(id))
-        except:
-            return 'There was an issue updating your task'
-    else:
-        return render_template('update.html', task=task)
-
-@app.route('/check/<int:task_id>/<int:notebook_id>', methods=['GET', 'POST'])
-@login_required
-def check(task_id, notebook_id):
-    task = Todo.query.get_or_404(task_id)
-    if task.check == False:
-        task.check = True
-    else:
-        task.check = False
-    try:
-        db.session.commit()
-    except:
-        return 'There was an issue updating your task'
-    return redirect('/dashboard/' + str(notebook_id))
-
-@app.route('/update_notebook/<int:notebook_id>', methods=['GET', 'POST'])
-@login_required
-def update_notebook(notebook_id):
-    notebook = Notebooks.query.get_or_404(notebook_id)
-    notebook_name = notebook.notebook
-    tasks = Todo.query.filter(
-        Todo.username == current_user.username,
-        Todo.notebook == notebook_name,
-        Todo.completed == False).all()
-    if request.method == 'POST':
-        for task in tasks:
-            if task.check == True:
-                task.completed = True
-                db.session.commit()
-        return redirect('/dashboard/' + str(notebook_id))
-    else:
-        return redirect('/dashboard/' + str(notebook_id))
 
 @app.route('/user')
 @login_required
