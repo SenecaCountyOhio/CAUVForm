@@ -13,14 +13,6 @@ body {
   height: 100vh;
 }
 
-.sign_logo {
-  letter-spacing: 5px;
-}
-
-.sign_title {
-  margin: auto;
-}
-
 .form {
   padding: 2%;
   border: 1px solid hsla(0, 0%, 71%, 1);
@@ -94,28 +86,18 @@ body {
   color: hsla(0, 0%, 41%, 1);
 }
 
-.notebook_link{
-  color: hsla(0, 0%, 71%, 1);
-}
-
-.notebook_link:hover{
-  color: hsla(0, 0%, 41%, 1);
-}
-
 table{
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 td {
+  text-align: center;
   padding: 8px;
   text-align: left;
   max-width: 500px;
   overflow-wrap: break-word;
   border: 0.5px solid hsla(0, 0%, 71%, 1);
-}
-
-.checkbox{
-  width: 20px;
-  height: 20px;
 }

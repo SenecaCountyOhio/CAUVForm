@@ -73,7 +73,7 @@ def fillform(id):
     app = PreviousCAUVApp.query.filter(PreviousCAUVApp.AG_APP == id).first()
     land_dict ={
         'Commodity_Acres': [app.Commodity_Acres, form.Commodity_Acres, form.Commodity_Acres.label],
-        'Hay_Acres': [app.Hay_Acres, form.Commodity_Acres, form.Commodity_Acres.label],
+        'Hay_Acres': [app.Hay_Acres, form.Hay_Acres, form.Hay_Acres.label],
         'Perm_Pasture_Acres': [app.Perm_Pasture_Acres, form.Perm_Pasture_Acres, form.Perm_Pasture_Acres.label],
         'Noncommercial_Wood_Acres': [app.Noncommercial_Wood_Acres, form.Noncommercial_Wood_Acres, form.Noncommercial_Wood_Acres.label],
         'Commerical_Wood_Acres': [app.Commerical_Wood_Acres, form.Commerical_Wood_Acres, form.Commerical_Wood_Acres.label],
