@@ -8,72 +8,80 @@
 <div class="content">
   <div class="form">
     <h1>CAUV Renewal Application Form</h1>
-    <p> APP#:
-      <a href="/notebooks" class="notebook_link">
-        {{ apps.AG_APP }}
-      </a>
-    </p>
+    <p> APP#: {{ app.AG_APP }}</p>
+    <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
     <div>
       <form class="" method="post">
         <table>
-          <th>Anticipated land use for the current year</th>
-          <th>Previous Acres</th>
-          <th>Current Acres</th>
           <tr>
-            <td>{{ form.Commodity_Acres.label }}</td>
-            <td>{{ apps.Commodity_Acres }}</td>
-            <td>{{ form.Commodity_Acres }}</td>
+            <th colspan="2">Farmed Acres</th>
+            <th colspan="2">Use of Land (crop)</th>
+            <th colspan="2">Units/Acre</th>
+            <th colspan="2">Price/Unit</th>
+            <th colspan="2">Gross Income</th>
           </tr>
           <tr>
-            <td>{{ form.Hay_Acres.label }}</td>
-            <td>{{ apps.Hay_Acres }}</td>
-            <td>{{ form.Hay_Acres }}</td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
           </tr>
           <tr>
-            <td>{{ form.Perm_Pasture_Acres.label }}</td>
-            <td>{{ apps.Perm_Pasture_Acres }}</td>
-            <td>{{ form.Perm_Pasture_Acres }}</td>
+            <td> {{ app.Farmed_Acres_1 }}</td>
+            <td> {{ form.Farmed_Acres_1 }}</td>
+            <td> {{ app.Use_of_Land_1 }}</td>
+            <td> {{ form.Use_of_Land_1 }}</td>
+            <td> {{ app.Units_Acre_1 }}</td>
+            <td> {{ form.Units_Acre_1 }}</td>
+            <td> {{ app.Price_Unit_1 }}</td>
+            <td> {{ form.Price_Unit_1 }}</td>
+            <td> {{ app.Gross_Income_1 }}</td>
+            <td> {{ form.Gross_Income_1 }}</td>
           </tr>
           <tr>
-            <td>{{ form.Noncommercial_Wood_Acres.label }}</td>
-            <td>{{ apps.Noncommercial_Wood_Acres }}</td>
-            <td>{{ form.Noncommercial_Wood_Acres }}</td>
+            <td> {{ app.Farmed_Acres_2 }}</td>
+            <td> {{ form.Farmed_Acres_2 }}</td>
+            <td> {{ app.Use_of_Land_2 }}</td>
+            <td> {{ form.Use_of_Land_2 }}</td>
+            <td> {{ app.Units_Acre_2 }}</td>
+            <td> {{ form.Units_Acre_2 }}</td>
+            <td> {{ app.Price_Unit_2 }}</td>
+            <td> {{ form.Price_Unit_2 }}</td>
+            <td> {{ app.Gross_Income_2 }}</td>
+            <td> {{ form.Gross_Income_2 }}</td>
           </tr>
           <tr>
-            <td>{{ form.Commerical_Wood_Acres.label }}</td>
-            <td>{{ apps.Commerical_Wood_Acres }}</td>
-            <td>{{ form.Commerical_Wood_Acres }}</td>
+            <td> {{ app.Farmed_Acres_3 }}</td>
+            <td> {{ form.Farmed_Acres_3 }}</td>
+            <td> {{ app.Use_of_Land_3 }}</td>
+            <td> {{ form.Use_of_Land_3 }}</td>
+            <td> {{ app.Units_Acre_3 }}</td>
+            <td> {{ form.Units_Acre_3 }}</td>
+            <td> {{ app.Price_Unit_3 }}</td>
+            <td> {{ form.Price_Unit_3 }}</td>
+            <td> {{ app.Gross_Income_3 }}</td>
+            <td> {{ form.Gross_Income_3 }}</td>
           </tr>
+        </table>
+        <table>
           <tr>
-            <td>{{ form.Other_Crop_Acres.label }}</td>
-            <td>{{ apps.Other_Crop_Acres }}</td>
-            <td>{{ form.Other_Crop_Acres }}</td>
+            <th>Anticipated land use for the current year</th>
+            <th>Previous Acres</th>
+            <th>Current Acres</th>
           </tr>
+          {% for each in land_dict %}
           <tr>
-            <td>{{ form.Homesite_Acres.label }}</td>
-            <td>{{ apps.Homesite_Acres }}</td>
-            <td>{{ form.Homesite_Acres }}</td>
+            <td>{{ land_dict[each][2] }}</td>
+            <td>{{ land_dict[each][0] }}</td>
+            <td>{{ land_dict[each][1] }}</td>
           </tr>
-          <tr>
-            <td>{{ form.Road_Waste_Pond_Acres.label }}</td>
-            <td>{{ apps.Road_Waste_Pond_Acres }}</td>
-            <td>{{ form.Road_Waste_Pond_Acres }}</td>
-          </tr>
-          <tr>
-            <td>{{ form.CRP_Acres.label }}</td>
-            <td>{{ apps.CRP_Acres }}</td>
-            <td>{{ form.CRP_Acres }}</td>
-          </tr>
-          <tr>
-            <td>{{ form.Con25_Acres.label }}</td>
-            <td>{{ apps.Con25_Acres }}</td>
-            <td>{{ form.Con25_Acres }}</td>
-          </tr>
-          <tr>
-            <td>{{ form.Other_Use_Acres.label }}</td>
-            <td>{{ apps.Other_Use_Acres }}</td>
-            <td>{{ form.Other_Use_Acres }}</td>
-          </tr>
+          {% endfor %}
         </table>
       {{ form.submit }}
     </form>
