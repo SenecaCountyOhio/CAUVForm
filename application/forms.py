@@ -61,5 +61,7 @@ class CAUVForm(Form):
     Gross_Income_1 = StringField()
     Gross_Income_2 = StringField()
     Gross_Income_3 = StringField()
+    Will_Parcel_Change = StringField()
+    Pacel_Change_Note = StringField()
 
     submit = SubmitField('Submit')
