@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Seneca County CAUV Form</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form">
+    <h1>CAUV Renewal Application Form</h1>
+    <div>
+      <form class="" method="POST">
+        <div>
+          {{ message }}
+        </div>
+        <div>
+          <input type="submit" name="submit" id="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+    <div class="sign_link">
+    <a href="/logout">Log Out</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
