@@ -32,42 +32,14 @@
             <td> Previous </td>
             <td> Current </td>
           </tr>
-          <tr>
-            <td> {{ app.Farmed_Acres_1 }}</td>
-            <td> {{ form.Farmed_Acres_1 }}</td>
-            <td> {{ app.Use_of_Land_1 }}</td>
-            <td> {{ form.Use_of_Land_1 }}</td>
-            <td> {{ app.Units_Acre_1 }}</td>
-            <td> {{ form.Units_Acre_1 }}</td>
-            <td> {{ app.Price_Unit_1 }}</td>
-            <td> {{ form.Price_Unit_1 }}</td>
-            <td> {{ app.Gross_Income_1 }}</td>
-            <td> {{ form.Gross_Income_1 }}</td>
-          </tr>
-          <tr>
-            <td> {{ app.Farmed_Acres_2 }}</td>
-            <td> {{ form.Farmed_Acres_2 }}</td>
-            <td> {{ app.Use_of_Land_2 }}</td>
-            <td> {{ form.Use_of_Land_2 }}</td>
-            <td> {{ app.Units_Acre_2 }}</td>
-            <td> {{ form.Units_Acre_2 }}</td>
-            <td> {{ app.Price_Unit_2 }}</td>
-            <td> {{ form.Price_Unit_2 }}</td>
-            <td> {{ app.Gross_Income_2 }}</td>
-            <td> {{ form.Gross_Income_2 }}</td>
-          </tr>
-          <tr>
-            <td> {{ app.Farmed_Acres_3 }}</td>
-            <td> {{ form.Farmed_Acres_3 }}</td>
-            <td> {{ app.Use_of_Land_3 }}</td>
-            <td> {{ form.Use_of_Land_3 }}</td>
-            <td> {{ app.Units_Acre_3 }}</td>
-            <td> {{ form.Units_Acre_3 }}</td>
-            <td> {{ app.Price_Unit_3 }}</td>
-            <td> {{ form.Price_Unit_3 }}</td>
-            <td> {{ app.Gross_Income_3 }}</td>
-            <td> {{ form.Gross_Income_3 }}</td>
-          </tr>
+          {% for each in income_dict %}
+            <tr>
+            {% for items in range(0,5) %}
+                <td>{{ income_dict[each][items][1] }}</td>
+                <td>{{ income_dict[each][items][0] }}</td>
+            {% endfor %}
+            </tr>
+          {% endfor %}
         </table>
         <table>
           <tr>

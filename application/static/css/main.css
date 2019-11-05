@@ -101,3 +101,7 @@ td {
   overflow-wrap: break-word;
   border: 0.5px solid hsla(0, 0%, 71%, 1);
 }
+
+.flagged{
+  background: hsl(0, 78%, 68%);
+}

@@ -1,6 +1,5 @@
 from wtforms import Form, StringField, PasswordField, validators, SubmitField, SelectField, BooleanField, IntegerField, DecimalField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from application import validators
 
 class SignupForm(Form):
     """User Sign Up Form."""
@@ -48,8 +47,7 @@ class AppSearch(Form):
 
 class CAUVForm(Form):
     Commodity_Acres = DecimalField(
-        'Commodity Crops -- Corn/Soybeans/Wheat/Oats',
-        [validators.acreage_check]
+        'Commodity Crops -- Corn/Soybeans/Wheat/Oats'
     )
     Hay_Acres = DecimalField(
         'Hay -- Baled at least twice a year'
@@ -82,7 +80,8 @@ class CAUVForm(Form):
         'Other Use -- Agritourism, Biofuel Production, etc.'
     )
     Stated_Total_Acres = DecimalField(
-        'Total Acres -- Must match acres above'
+        'Total Acres -- Must match acres above',
+        [DataRequired()]
     )
     Farmed_Acres_1 = DecimalField()
     Farmed_Acres_2 = DecimalField()
@@ -99,6 +98,6 @@ class CAUVForm(Form):
     Gross_Income_1 = StringField()
     Gross_Income_2 = StringField()
     Gross_Income_3 = StringField()
-    Will_Parcel_Change = StringField()
+    Parcel_Change_Check = StringField()
     Pacel_Change_Note = StringField()
-    submit = SubmitField('Validate')
+    submit = SubmitField('Submit')

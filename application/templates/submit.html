@@ -8,15 +8,69 @@
 <div class="content">
   <div class="form">
     <h1>CAUV Renewal Application Form</h1>
+    <p> APP#: {{ app.AG_APP }}</p>
+    <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
+    <p> app Income 3:{{ app.Gross_Income_3 }}</p>
+    <p> old app Income 3:{{ old_app.Gross_Income_3 }}</p>
+    <p> old app Income 2:{{ old_app.Gross_Income_2 }}</p>
     <div>
-      <form class="" method="POST">
-        <div>
-          {{ message }}
-        </div>
-        <div>
-          <input type="submit" name="submit" id="submit" value="Submit">
-        </div>
-      </form>
+      <form class="" method="post">
+        <table>
+          <tr>
+            <th colspan="2">Farmed Acres</th>
+            <th colspan="2">Use of Land (crop)</th>
+            <th colspan="2">Units/Acre</th>
+            <th colspan="2">Price/Unit</th>
+            <th colspan="2">Gross Income</th>
+          </tr>
+          <tr>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+            <td> Previous </td>
+            <td> Current </td>
+          </tr>
+          {% for each in income_dict %}
+            <tr>
+            {% for items in range(0,5) %}
+              {% if income_dict[each][items][0] != income_dict[each][items][1] %}
+              <td class="flagged">{{ income_dict[each][items][0] }}</td>
+              <td class="flagged">{{ income_dict[each][items][1] }}</td>
+              {% else %}
+              <td>{{ income_dict[each][items][0] }}</td>
+              <td>{{ income_dict[each][items][1] }}</td>
+              {% endif %}
+            {% endfor %}
+            </tr>
+          {% endfor %}
+        </table>
+        <table>
+          <tr>
+            <th>Anticipated land use for the current year</th>
+            <th>Previous Acres</th>
+            <th>Current Acres</th>
+          </tr>
+          {% for each in land_dict %}
+          <tr>
+            {% if land_dict[each][0] == land_dict[each][1] %}
+              <td>{{ land_dict[each][2] }}</td>
+              <td>{{ land_dict[each][0] }}</td>
+              <td>{{ land_dict[each][1] }}</td>
+            {% else %}
+              <td class="flagged">{{ land_dict[each][2] }}</td>
+              <td class="flagged">{{ land_dict[each][0] }}</td>
+              <td class="flagged">{{ land_dict[each][1] }}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </table>
+      {{ form.submit }}
+    </form>
     </div>
     <div class="sign_link">
     <a href="/logout">Log Out</a>
