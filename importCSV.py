@@ -36,7 +36,7 @@ cauv_dict = {
     'Price_Unit_3': None,
     'Gross_Income_1': None,
     'Gross_Income_2': None,
-    #'Gross_Income_3': None,
+    'Gross_Income_3': None,
 }
 
 for row in open('2019RENEWAL_CAUV_APPS_DATABASE.csv'):
@@ -70,7 +70,7 @@ for row in open('2019RENEWAL_CAUV_APPS_DATABASE.csv'):
     cauv_dict['Use_of_Land_3'] = line[26]
     cauv_dict['Units_Acre_3'] = line[27]
     cauv_dict['Price_Unit_3'] = line[28]
-    # cauv_dict['Gross_Income_3'] = line[29]
+    cauv_dict['Gross_Income_3'] = line[29]
     for each in cauv_dict:
         app = PreviousCAUVApp(
             user="BC",
@@ -103,7 +103,7 @@ for row in open('2019RENEWAL_CAUV_APPS_DATABASE.csv'):
             Price_Unit_3=cauv_dict['Price_Unit_3'],
             Gross_Income_1=cauv_dict['Gross_Income_1'],
             Gross_Income_2=cauv_dict['Gross_Income_2'],
-            # Gross_Income_3=cauv_dict['Gross_Income_3'],
+            Gross_Income_3=cauv_dict['Gross_Income_3'],
         )
         db.session.add(app)
 db.session.commit()
