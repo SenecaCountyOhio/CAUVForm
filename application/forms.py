@@ -1,5 +1,24 @@
-from wtforms import Form, StringField, PasswordField, validators, SubmitField, SelectField, BooleanField, IntegerField, DecimalField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms import (
+    Form,
+    StringField,
+    PasswordField,
+    SubmitField,
+    SelectField,
+    BooleanField,
+    IntegerField,
+    DecimalField,
+    TextAreaField,
+    RadioField
+)
+from wtforms.validators import (
+    ValidationError,
+    required,
+    InputRequired,
+    DataRequired,
+    Email,
+    EqualTo,
+    Length
+)
 
 class SignupForm(Form):
     """User Sign Up Form."""
@@ -44,7 +63,6 @@ class AppSearch(Form):
     search = IntegerField('Search App Number')
     submit = SubmitField('Search')
 
-
 class CAUVForm(Form):
     Commodity_Acres = DecimalField(
         'Commodity Crops -- Corn/Soybeans/Wheat/Oats'
@@ -80,8 +98,8 @@ class CAUVForm(Form):
         'Other Use -- Agritourism, Biofuel Production, etc.'
     )
     Stated_Total_Acres = DecimalField(
-        'Total Acres -- Must match acres above',
-        [DataRequired()]
+        label='Total Acres -- Must match acres above',
+        validators=[DataRequired()]
     )
     Farmed_Acres_1 = DecimalField()
     Farmed_Acres_2 = DecimalField()
@@ -98,6 +116,16 @@ class CAUVForm(Form):
     Gross_Income_1 = StringField()
     Gross_Income_2 = StringField()
     Gross_Income_3 = StringField()
-    Parcel_Change_Check = StringField()
-    Pacel_Change_Note = StringField()
+    Parcel_Change_Check = RadioField(
+        label='Will the general farming operations on any of these parcels change this year?',
+        validators=[InputRequired()],
+        choices=[
+            ('Yes', 'Yes'),
+            ('No', 'No')
+        ],
+    )
+    Parcel_Change_Note = TextAreaField(
+        'If yes, provide an explanation below;',
+        # validators=[Parcel_Check(Parcel_Change_Check)]
+    )
     submit = SubmitField('Submit')

@@ -9,13 +9,21 @@
   <div class="form">
     <h1>CAUV Renewal Application Form</h1>
     <div>
-      <form class="" method="POST">
+      {{ error[0] }}
+      <form method="POST">
         <div>{{ form.search }}</div>
         <div>{{ form.submit }}</div>
       </form>
-    </div>
-    <div>
-      {{ error[0] }}
+      {% if admin==1 %}
+      <div>
+      <form class="" action="/signup">
+        <input type="submit" name="submit" id="submit" value="Add a User">
+      </form>
+      <form class="" action="/view">
+        <input type="submit" name="submit" id="submit" value="View Submitted Apps">
+      </form>
+      </div>
+      {% endif %}
     </div>
     <div class="sign_link">
     <a href="/logout">Log Out</a>

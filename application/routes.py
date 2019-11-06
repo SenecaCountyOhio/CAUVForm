@@ -20,33 +20,39 @@ def base():
     return redirect('/signin')
 
 
-@app.route('/signup', methods=['GET', 'POST'])
-@login_required
-def signup():
-    """Signup Form."""
-    signup_form = SignupForm()
-    if request.method == 'POST':
-        new_user = User(
-            username=request.form['email'],
-            password=request.form['password']
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect('/signin')
-    return render_template('signup.html', form=signup_form)
-
-
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     """Login Form."""
     login_form = SigninForm()
     if request.method == 'POST':
         user = User.query.filter(
-            User.username == request.form['email']).first()
+            User.username == request.form['email']
+        ).first()
         if user.password == request.form['password']:
             login_user(user)
             return redirect('/app_search')
-    return render_template('signin.html', form=login_form)
+    return render_template(
+        'signin.html',
+        form=login_form
+    )
+
+@app.route('/signup', methods=['GET', 'POST'])
+@login_required
+def signup():
+    """Signup Form."""
+    if current_user.username != 'admin':
+        return redirect('/app_search')
+    else:
+        signup_form = SignupForm()
+        if request.method == 'POST':
+            new_user = User(
+                username=request.form['email'],
+                password=request.form['password']
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect('/signin')
+        return render_template('signup.html', form=signup_form)
 
 
 @app.route('/logout')
@@ -59,6 +65,10 @@ def logout():
 @app.route('/app_search', methods=['POST', 'GET'])
 @login_required
 def app_search():
+    if current_user.username == 'admin':
+        admin = 1
+    else:
+        admin = 0
     search_form = AppSearch()
     error = []
     if request.method == 'POST':
@@ -69,7 +79,13 @@ def app_search():
             error = ['No Applications Found using ' + search]
         else:
             return redirect('/fillform/' + str(search))
-    return render_template('search.html', error=error, form=search_form)
+
+    return render_template(
+        'search.html',
+        error=error,
+        form=search_form,
+        admin=admin,
+    )
 
 
 @app.route('/fillform/<int:id>', methods=['POST', 'GET'])
@@ -214,7 +230,8 @@ def fillform(id):
         new_temp_app = TempCAUVApp(
             user=current_user.username,
             AG_APP=app.AG_APP,
-            # Parcel_Change_Check=request.form['Parcel_Change_Check'],
+            Parcel_Change_Check=request.form['Parcel_Change_Check'],
+            Parcel_Change_Note=request.form['Parcel_Change_Note'],
             Parcels_Combined_Acres=app.Parcels_Combined_Acres,
             Commodity_Acres=request.form['Commodity_Acres'],
             Hay_Acres=request.form['Hay_Acres'],
@@ -257,12 +274,16 @@ def fillform(id):
     )
 
 
-@app.route('/submit/<int:id>')
+@app.route('/submit/<int:id>', methods=['POST', 'GET'])
 @login_required
 def submit(id):
     form = CAUVForm()
-    temp_app = TempCAUVApp.query.filter(TempCAUVApp.AG_APP == id).first()
-    old_app = PreviousCAUVApp.query.filter(PreviousCAUVApp.AG_APP == id).first()
+    temp_app = TempCAUVApp.query.filter(
+        TempCAUVApp.AG_APP == id
+    ).first()
+    old_app = PreviousCAUVApp.query.filter(
+        PreviousCAUVApp.AG_APP == id
+    ).first()
     land_dict = {
         'Commodity_Acres': [
             old_app.Commodity_Acres,
@@ -393,6 +414,43 @@ def submit(id):
             ]
         ]
     }
+    if request.method == "POST":
+        completed_app = CAUVApp(
+            user=current_user.username,
+            AG_APP=temp_app.AG_APP,
+            Parcel_Change_Check=temp_app.Parcel_Change_Check,
+            Parcels_Combined_Acres=temp_app.Parcels_Combined_Acres,
+            Commodity_Acres=temp_app.Commodity_Acres,
+            Hay_Acres=temp_app.Hay_Acres,
+            Perm_Pasture_Acres=temp_app.Perm_Pasture_Acres,
+            Noncommercial_Wood_Acres=temp_app.Noncommercial_Wood_Acres,
+            Commerical_Wood_Acres=temp_app.Commerical_Wood_Acres,
+            Other_Crop_Acres=temp_app.Other_Crop_Acres,
+            Homesite_Acres=temp_app.Homesite_Acres,
+            Road_Waste_Pond_Acres=temp_app.Road_Waste_Pond_Acres,
+            CRP_Acres=temp_app.CRP_Acres,
+            Con25_Acres=temp_app.Con25_Acres,
+            Other_Use_Acres=temp_app.Other_Use_Acres,
+            Stated_Total_Acres=temp_app.Stated_Total_Acres,
+            Farmed_Acres_1=temp_app.Farmed_Acres_1,
+            Farmed_Acres_2=temp_app.Farmed_Acres_2,
+            Farmed_Acres_3=temp_app.Farmed_Acres_3,
+            Use_of_Land_1=temp_app.Use_of_Land_1,
+            Use_of_Land_2=temp_app.Use_of_Land_2,
+            Use_of_Land_3=temp_app.Use_of_Land_3,
+            Units_Acre_1=temp_app.Units_Acre_1,
+            Units_Acre_2=temp_app.Units_Acre_2,
+            Units_Acre_3=temp_app.Units_Acre_3,
+            Price_Unit_1=temp_app.Price_Unit_1,
+            Price_Unit_2=temp_app.Price_Unit_2,
+            Price_Unit_3=temp_app.Price_Unit_3,
+            Gross_Income_1=temp_app.Gross_Income_1,
+            Gross_Income_2=temp_app.Gross_Income_2,
+            Gross_Income_3=temp_app.Gross_Income_3,
+        )
+        db.session.add(completed_app)
+        db.session.commit()
+        return render_template('success.html')
     return render_template(
         'submit.html',
         land_dict=land_dict,
@@ -400,6 +458,16 @@ def submit(id):
         app=temp_app,
         old_app=old_app,
         form=form
+    )
+
+
+@app.route('/view')
+@login_required
+def view():
+    apps = CAUVApp.query.all()
+    return render_template(
+        'view.html',
+        apps=apps
     )
 
 @app.route('/user')

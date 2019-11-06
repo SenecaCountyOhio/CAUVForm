@@ -12,6 +12,17 @@
     <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
     <div>
       <form class="" method="post">
+        {{ form.Parcel_Change_Check.label }}
+        {% for subfield in form.Parcel_Change_Check %}
+        <div>
+        {{ subfield(required="") }}
+        {{ subfield.label }}
+        </div>
+        {% endfor %}
+        <div>
+        {{ form.Parcel_Change_Note.label }}
+        </div>
+        {{ form.Parcel_Change_Note }}
         <table>
           <tr>
             <th colspan="2">Farmed Acres</th>

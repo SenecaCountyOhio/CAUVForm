@@ -7,17 +7,18 @@
 {% block body %}
 <div class="content">
     <div class="form">
-      <h1>CAUV Form</h1>
-        <form class="form-container" method="POST">
-            {{form.email(class="form-control", placeholder="Email")}}
+      <h1>Add New User</h1>
+        <form method="POST">
+            {{form.email(class="form-control", placeholder="Username")}}
             {{form.password(class="form-control", placeholder="Password")}}
             {{form.confirm(class="form-control", placeholder="Confirm Password")}}
-          <div class="submitbutton">
-            <input id="submit" type="submit" value="Sign Up">
+          <div>
+            <input id="submit" name='submit' type="submit" value="Sign Up">
           </div>
         </form>
-        <div class="sign_link">
-          <a href="/signin">Already have an account?</a>
+        <form action="/app_search">
+          <input type="submit" name="submit" id="submit" value="Go to Search">
+        </form>
       </div>
     </div>
 </div>

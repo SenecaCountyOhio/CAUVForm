@@ -11,7 +11,16 @@
     <p> APP#: {{ app.AG_APP }}</p>
     <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
     <div>
-      <form class="" method="post">
+      <form method="post">
+        <div>
+          {{ form.Parcel_Change_Check.label }}
+        </div>
+        {{ app.Parcel_Change_Check }}
+        {% if app.Parcel_Change_Note != '' %}
+        <div>
+          {{ app.Parcel_Change_Note }}
+        </div>
+        {% endif %}
         <table>
           <tr>
             <th colspan="2">Farmed Acres</th>
@@ -66,8 +75,8 @@
           </tr>
           {% endfor %}
         </table>
-      {{ form.submit }}
-    </form>
+        {{ form.submit }}
+      </form>
     </div>
     <div class="sign_link">
     <a href="/logout">Log Out</a>

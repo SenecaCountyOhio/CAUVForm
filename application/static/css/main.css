@@ -105,3 +105,8 @@ td {
 .flagged{
   background: hsl(0, 78%, 68%);
 }
+
+.scroll{
+  overflow: auto;
+  white-space: nowrap;
+}
