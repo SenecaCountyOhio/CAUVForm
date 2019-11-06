@@ -3,3 +3,4 @@ application/users.sqlite3
 env_pc
 *.sqlite3
 ignore
+*.csv
