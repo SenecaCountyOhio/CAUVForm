@@ -70,7 +70,7 @@ for row in open('2019RENEWAL_CAUV_APPS_DATABASE.csv'):
     cauv_dict['Use_of_Land_3'] = line[26]
     cauv_dict['Units_Acre_3'] = line[27]
     cauv_dict['Price_Unit_3'] = line[28]
-    cauv_dict['Gross_Income_3'] = line[29]
+    cauv_dict['Gross_Income_3'] = line[29].strip()
     for each in cauv_dict:
         app = PreviousCAUVApp(
             user="BC",
