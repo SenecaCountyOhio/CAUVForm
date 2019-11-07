@@ -22,11 +22,9 @@ from wtforms.validators import (
 
 class SignupForm(Form):
     """User Sign Up Form."""
-    email = StringField(
+    username = StringField(
         'Email',
-        [
-            Length(min=6, message=('Little short for an email address?')),
-            Email(message=('That\'s not a valid email address.')),
+        validators=[
             DataRequired(message=('That\'s not a valid email address.'))
         ]
     )
@@ -36,7 +34,13 @@ class SignupForm(Form):
     )
     confirm = PasswordField(
         'Confirm Password',
-        validators=[EqualTo(password, message='Passwords must match.')]
+        validators=[
+            InputRequired(),
+            EqualTo(
+                password,
+                message='Passwords must match.'
+            )
+        ]
     )
     submit = SubmitField(
         'Register'
@@ -51,9 +55,12 @@ class SignupForm(Form):
 
 class SigninForm(Form):
     """User Sign In Form."""
-    email = StringField('Email', [
-        Email(message=('That\'s not a valid email address.')),
-        DataRequired(message=('That\'s not a valid email address.'))])
+    username = StringField(
+        'Email',
+        validators=[
+            DataRequired(message=('That\'s not a valid email address.'))
+        ]
+    )
     password = PasswordField('Password',
                              validators=[DataRequired(message="Please enter a password."), ])
     submit = SubmitField('Register')

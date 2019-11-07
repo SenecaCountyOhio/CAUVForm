@@ -6,9 +6,12 @@
 {% block body %}
 <div class="content">
   <div class="form">
+  <div class="form-container-large">
+
     <h1>CAUV Form</h1>
     <div class="scroll">
       <table>
+        {% if model == 'CAUVApp' %}
         <tr>
           <td> id </td>
           <td> user </td>
@@ -45,7 +48,7 @@
           <td> Gross_Income_3 </td>
           <td> date_added </td>
         </tr>
-      {% for each in apps %}
+      {% for each in rows %}
         <tr>
           <td>{{ each.id }}</td>
           <td>{{ each.user }}</td>
@@ -83,6 +86,23 @@
           <td>{{ each.date_added }}</td>
         </tr>
       {% endfor %}
+      {% endif %}
+      {% if model == 'User' %}
+      <tr>
+        <td>id</td>
+        <td>username</td>
+        <td>password</td>
+        <td>date_created</td>
+      </tr>
+      {% for each in rows %}
+      <tr>
+        <td>{{ each.id }}</td>
+        <td>{{ each.username }}</td>
+        <td>{{ each.password }}</td>
+        <td>{{ each.date_created }}</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
       </table>
     </div>
     <form action="/app_search">
@@ -91,6 +111,7 @@
     <div class="sign_link">
     <a href="/logout">Log Out</a>
     </div>
+  </div>
   </div>
 </div>
 {% endblock %}

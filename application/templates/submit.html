@@ -5,6 +5,8 @@
 
 {% block body %}
 <div class="form">
+  <div class="form-container-large">
+
   <h1>CAUV Renewal Application Form</h1>
   <p> APP#: {{ app.AG_APP }}</p>
   <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
@@ -82,5 +84,6 @@
   <div class="sign_link">
   <a href="/logout">Log Out</a>
   </div>
+</div>
 </div>
 {% endblock %}

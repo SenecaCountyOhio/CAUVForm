@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="form">
-  <div class="form-container">
+  <div class="form-container-small">
     <h1>CAUV Form</h1>
     {{ error[0] }}
     <form method="POST">
@@ -17,14 +17,17 @@
     <form class="" action="/signup">
       <input type="submit" name="submit" id="submit" value="Add a User">
     </form>
-    <form class="" action="/view">
+    <form class="" action="/view/User">
+      <input type="submit" name="submit" id="submit" value="View All Users">
+    </form>
+    <form class="" action="/view/CAUVApp">
       <input type="submit" name="submit" id="submit" value="View Submitted Apps">
     </form>
     </div>
     {% endif %}
-  </div>
-  <div class="sign_link">
-  <a href="/logout">Log Out</a>
+    <div class="sign_link">
+      <a href="/logout">Log Out</a>
+    </div>
   </div>
 </div>
 {% endblock %}

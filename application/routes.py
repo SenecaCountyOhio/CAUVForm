@@ -24,17 +24,25 @@ def base():
 def signin():
     """Login Form."""
     login_form = SigninForm()
+    error = ''
     if request.method == 'POST':
-        user = User.query.filter(
-            User.username == request.form['email']
-        ).first()
-        if user.password == request.form['password']:
-            login_user(user)
-            return redirect('/app_search')
+        try:
+            user = User.query.filter(
+                User.username == request.form['username']
+            ).first()
+            if user.password == request.form['password']:
+                login_user(user)
+                return redirect('/app_search')
+            else:
+                error = "Password does not match"
+        except:
+            error = 'User not registered, contact admin'
     return render_template(
         'signin.html',
-        form=login_form
+        form=login_form,
+        error=error
     )
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 @login_required
@@ -44,15 +52,28 @@ def signup():
         return redirect('/app_search')
     else:
         signup_form = SignupForm()
+        error = ""
         if request.method == 'POST':
-            new_user = User(
-                username=request.form['email'],
-                password=request.form['password']
-            )
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect('/signin')
-        return render_template('signup.html', form=signup_form)
+            try:
+                if request.form['confirm'] == request.form['password']:
+                    new_user = User(
+                        username=request.form['username'],
+                        password=request.form['password']
+                    )
+                    db.session.add(new_user)
+                    db.session.commit()
+                    return render_template(
+                        'success.html'
+                    )
+                else:
+                    error = 'Passwords do not match'
+            except:
+                error = 'User already in system'
+        return render_template(
+            'signup.html',
+            form=signup_form,
+            error=error
+        )
 
 
 @app.route('/logout')
@@ -461,14 +482,22 @@ def submit(id):
     )
 
 
-@app.route('/view')
+@app.route('/view/<model>')
 @login_required
-def view():
-    apps = CAUVApp.query.all()
-    return render_template(
-        'view.html',
-        apps=apps
-    )
+def view(model):
+    if current_user.username == "admin":
+        model_dict = {
+            "CAUVApp": CAUVApp.query.all(),
+            "User": User.query.all()
+        }
+        rows = model_dict[model]
+        return render_template(
+            'view.html',
+            model=model,
+            rows=rows,
+        )
+    else:
+        return redirect('/app_search')
 
 @app.route('/user')
 @login_required

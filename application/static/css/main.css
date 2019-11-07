@@ -1,6 +1,6 @@
 body {
   font-family: 'Oxygen', sans-serif;
-  background-color: hsl(203, 27%, 18%);
+  background-color: hsl(125, 18%, 23%);
   font-size: 16px;
   text-align: center;
   height: 100vh;
@@ -11,22 +11,33 @@ body {
 
 .form {
   padding: 2%;
-  border: 1px solid hsla(0, 0%, 71%, 1);
-  border-radius: 8px;
-  background-color: white;
   margin: 0 auto;
   min-width: 300px;
-  width: 800px;
   text-align: left;
 }
 
-.form-container{
+.form-container-large{
+  background-color: white;
+  border: 1px solid hsla(0, 0%, 71%, 1);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: auto;
-  padding: 8px;
-  width: 200px;
+  padding: 20px;
+  width: 800px;
+}
+
+.form-container-small{
+  background-color: white;
+  border: 1px solid hsla(0, 0%, 71%, 1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  padding: 20px;
+  width: 300px;
 }
 
 .form-control{
