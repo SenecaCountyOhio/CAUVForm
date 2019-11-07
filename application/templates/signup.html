@@ -1,25 +1,23 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Seneca County CAUV Form</title>
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <div class="form">
-      <h1>Add New User</h1>
-        <form method="POST">
-            {{form.email(class="form-control", placeholder="Username")}}
-            {{form.password(class="form-control", placeholder="Password")}}
-            {{form.confirm(class="form-control", placeholder="Confirm Password")}}
-          <div>
-            <input id="submit" name='submit' type="submit" value="Sign Up">
-          </div>
-        </form>
-        <form action="/app_search">
-          <input type="submit" name="submit" id="submit" value="Go to Search">
-        </form>
+<div class="form">
+  <div class="form-container">
+  <h1>Add New User</h1>
+    <form method="POST">
+        {{form.email(class="form-control", placeholder="Username")}}
+        {{form.password(class="form-control", placeholder="Password")}}
+        {{form.confirm(class="form-control", placeholder="Confirm Password")}}
+      <div>
+        <input id="submit" name='submit' type="submit" value="Sign Up">
       </div>
-    </div>
+    </form>
+    <form action="/app_search">
+      <input type="submit" name="submit" id="submit" value="Back to Search">
+    </form>
+  </div>
 </div>
 {% endblock %}

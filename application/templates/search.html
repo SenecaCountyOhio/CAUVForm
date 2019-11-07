@@ -1,33 +1,30 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Seneca County CAUV Form</title>
 {% endblock %}
 
 {% block body %}
-<div class="content">
-  <div class="form">
-    <h1>CAUV Renewal Application Form</h1>
+<div class="form">
+  <div class="form-container">
+    <h1>CAUV Form</h1>
+    {{ error[0] }}
+    <form method="POST">
+      <div>{{ form.search(class="form-control", placeholder="Search App Number...") }}</div>
+      <div>{{ form.submit }}</div>
+    </form>
+    {% if admin==1 %}
     <div>
-      {{ error[0] }}
-      <form method="POST">
-        <div>{{ form.search }}</div>
-        <div>{{ form.submit }}</div>
-      </form>
-      {% if admin==1 %}
-      <div>
-      <form class="" action="/signup">
-        <input type="submit" name="submit" id="submit" value="Add a User">
-      </form>
-      <form class="" action="/view">
-        <input type="submit" name="submit" id="submit" value="View Submitted Apps">
-      </form>
-      </div>
-      {% endif %}
+    <form class="" action="/signup">
+      <input type="submit" name="submit" id="submit" value="Add a User">
+    </form>
+    <form class="" action="/view">
+      <input type="submit" name="submit" id="submit" value="View Submitted Apps">
+    </form>
     </div>
-    <div class="sign_link">
-    <a href="/logout">Log Out</a>
-    </div>
+    {% endif %}
+  </div>
+  <div class="sign_link">
+  <a href="/logout">Log Out</a>
   </div>
 </div>
 {% endblock %}

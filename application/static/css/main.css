@@ -1,16 +1,12 @@
 body {
-  margin: 0;
   font-family: 'Oxygen', sans-serif;
   background-color: hsl(203, 27%, 18%);
   font-size: 16px;
-}
-
-.content {
+  text-align: center;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+  justify-content: center;
 }
 
 .form {
@@ -18,8 +14,10 @@ body {
   border: 1px solid hsla(0, 0%, 71%, 1);
   border-radius: 8px;
   background-color: white;
-  margin: auto;
+  margin: 0 auto;
   min-width: 300px;
+  width: 800px;
+  text-align: left;
 }
 
 .form-container{
@@ -28,6 +26,7 @@ body {
   justify-content: space-between;
   margin: auto;
   padding: 8px;
+  width: 200px;
 }
 
 .form-control{
