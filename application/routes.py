@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import SigninForm, SignupForm, AppSearch, CAUVForm
 from .models import db, User, CAUVApp, PreviousCAUVApp, TempCAUVApp
 from . import login_manager
-from .land import land
+from .land import land, income, item5
 
 
 @login_manager.user_loader
@@ -116,142 +116,19 @@ def app_search():
 def fillform(id):
     app_num = id
     form = CAUVForm()
-    message = ''
     app = PreviousCAUVApp.query.filter(PreviousCAUVApp.AG_APP == id).first()
-    land_dict1 = land(
+    item5_dict = item5(
         form=CAUVForm(),
-        app_num=app_num
+        app_num=app_num,
     )
-    land_dict2 = {
-        'Commodity_Acres': [
-            app.Commodity_Acres,
-            form.Commodity_Acres,
-            form.Commodity_Acres.label
-        ],
-        'Hay_Acres': [
-            app.Hay_Acres,
-            form.Hay_Acres,
-            form.Hay_Acres.label
-        ],
-        'Perm_Pasture_Acres': [
-            app.Perm_Pasture_Acres,
-            form.Perm_Pasture_Acres,
-            form.Perm_Pasture_Acres.label
-        ],
-        'Noncommercial_Wood_Acres': [
-            app.Noncommercial_Wood_Acres,
-            form.Noncommercial_Wood_Acres,
-            form.Noncommercial_Wood_Acres.label
-        ],
-        'Commerical_Wood_Acres': [
-            app.Commerical_Wood_Acres,
-            form.Commerical_Wood_Acres,
-            form.Commerical_Wood_Acres.label
-        ],
-        'Other_Crop_Acres': [
-            app.Other_Crop_Acres,
-            form.Other_Crop_Acres,
-            form.Other_Crop_Acres.label
-        ],
-        'Homesite_Acres': [
-            app.Homesite_Acres,
-            form.Homesite_Acres,
-            form.Homesite_Acres.label
-        ],
-        'Road_Waste_Pond_Acres': [
-            app.Road_Waste_Pond_Acres,
-            form.Road_Waste_Pond_Acres,
-            form.Road_Waste_Pond_Acres.label
-            ],
-        'CRP_Acres': [
-            app.CRP_Acres,
-            form.CRP_Acres,
-            form.CRP_Acres.label
-        ],
-        'Con25_Acres': [
-            app.Con25_Acres,
-            form.Con25_Acres,
-            form.Con25_Acres.label
-        ],
-        'Other_Use_Acres': [
-            app.Other_Use_Acres,
-            form.Other_Use_Acres,
-            form.Other_Use_Acres.label
-        ],
-        'Stated_Total_Acres': [
-            app.Stated_Total_Acres,
-            form.Stated_Total_Acres,
-            form.Stated_Total_Acres.label
-        ],
-    }
-    income_dict = {
-        'Income_Row_1': [
-            [
-                form.Farmed_Acres_1,
-                app.Farmed_Acres_1,
-            ],
-            [
-                form.Use_of_Land_1,
-                app.Use_of_Land_1,
-            ],
-            [
-                form.Units_Acre_1,
-                app.Units_Acre_1,
-            ],
-            [
-                form.Price_Unit_1,
-                app.Price_Unit_1,
-            ],
-            [
-                form.Gross_Income_1,
-                app.Gross_Income_1,
-            ],
-        ],
-        'Income_Row_2': [
-            [
-                form.Farmed_Acres_2,
-                app.Farmed_Acres_2,
-            ],
-            [
-                form.Use_of_Land_2,
-                app.Use_of_Land_2,
-            ],
-            [
-                form.Units_Acre_2,
-                app.Units_Acre_2,
-            ],
-            [
-                form.Price_Unit_2,
-                app.Price_Unit_2,
-            ],
-            [
-                form.Gross_Income_2,
-                app.Gross_Income_2,
-            ]
-        ],
-        'Income_Row_3': [
-            [
-                form.Farmed_Acres_3,
-                app.Farmed_Acres_3
-            ],
-            [
-                form.Use_of_Land_3,
-                app.Use_of_Land_3
-            ],
-            [
-                form.Units_Acre_3,
-                app.Units_Acre_3
-            ],
-            [
-                form.Price_Unit_3,
-                app.Price_Unit_3
-            ],
-            [
-                form.Gross_Income_3,
-                app.Gross_Income_3
-            ]
-        ]
-    }
+    land_dict = land(
+        form=CAUVForm(),
+        app_num=app_num,
+    )
+    income_dict = income(
+        form=CAUVForm(),
+        app_num=app_num,
+    )
     if request.method == 'POST':
         db.session.query(TempCAUVApp).delete()
         db.session.commit()
@@ -293,11 +170,17 @@ def fillform(id):
         db.session.commit()
         return redirect('/submit/' + str(id))
 
+    check_state = item5_dict['Parcel_Change_Check'][0]
+    form.Parcel_Change_Check.default = check_state
+    text = item5_dict['Parcel_Change_Note'][0]
+    form.Parcel_Change_Note.default = text
+    form.process()
     return render_template(
         'index.html',
         app=app,
         form=form,
-        land_dict=land_dict1,
+        item5_dict=item5_dict,
+        land_dict=land_dict,
         income_dict=income_dict
     )
 
@@ -317,74 +200,10 @@ def submit(id):
         form=CAUVForm(),
         app_num=app_num,
     )
-    income_dict = {
-        'Income_Row_1': [
-            [
-                old_app.Farmed_Acres_1,
-                temp_app.Farmed_Acres_1,
-            ],
-            [
-                old_app.Use_of_Land_1,
-                temp_app.Use_of_Land_1,
-            ],
-            [
-                old_app.Units_Acre_1,
-                temp_app.Units_Acre_1,
-            ],
-            [
-                old_app.Price_Unit_1,
-                temp_app.Price_Unit_1,
-            ],
-            [
-                old_app.Gross_Income_1,
-                temp_app.Gross_Income_1,
-            ],
-        ],
-        'Income_Row_2': [
-            [
-                old_app.Farmed_Acres_2,
-                temp_app.Farmed_Acres_2,
-            ],
-            [
-                old_app.Use_of_Land_2,
-                temp_app.Use_of_Land_2,
-            ],
-            [
-                old_app.Units_Acre_2,
-                temp_app.Units_Acre_2,
-            ],
-            [
-                old_app.Price_Unit_2,
-                temp_app.Price_Unit_2,
-            ],
-            [
-                old_app.Gross_Income_2,
-                temp_app.Gross_Income_2,
-            ]
-        ],
-        'Income_Row_3': [
-            [
-                old_app.Farmed_Acres_3,
-                temp_app.Farmed_Acres_3
-            ],
-            [
-                old_app.Use_of_Land_3,
-                temp_app.Use_of_Land_3
-            ],
-            [
-                old_app.Units_Acre_3,
-                temp_app.Units_Acre_3
-            ],
-            [
-                old_app.Price_Unit_3,
-                temp_app.Price_Unit_3
-            ],
-            [
-                old_app.Gross_Income_3,
-                temp_app.Gross_Income_3
-            ]
-        ]
-    }
+    income_dict = income(
+        form=CAUVForm(),
+        app_num=app_num,
+    )
     if request.method == "POST":
         app = CAUVApp.query.filter(CAUVApp.AG_APP == app_num).first()
         if app is None:
@@ -392,6 +211,7 @@ def submit(id):
                 user=current_user.username,
                 AG_APP=temp_app.AG_APP,
                 Parcel_Change_Check=temp_app.Parcel_Change_Check,
+                Parcel_Change_Note=temp_app.Parcel_Change_Note,
                 Parcels_Combined_Acres=temp_app.Parcels_Combined_Acres,
                 Commodity_Acres=temp_app.Commodity_Acres,
                 Hay_Acres=temp_app.Hay_Acres,
@@ -428,6 +248,7 @@ def submit(id):
             app.user = current_user.username
             app.AG_APP = temp_app.AG_APP
             app.Parcel_Change_Check = temp_app.Parcel_Change_Check
+            app.Parcel_Change_Note = temp_app.Parcel_Change_Note
             app.Parcels_Combined_Acres = temp_app.Parcels_Combined_Acres
             app.Commodity_Acres = temp_app.Commodity_Acres
             app.Hay_Acres = temp_app.Hay_Acres

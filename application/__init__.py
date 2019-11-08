@@ -28,6 +28,21 @@ def create_app():
         if len(admin) == 0:
             admin = User(username='admin', password='admin')
             db.session.add(admin)
+            core_users = [
+                'bcullen',
+                'jadkins',
+                'eclifton',
+                'scoffman',
+                'jrenwand',
+                'csendelbach',
+                'kzoeller'
+            ]
+            for each in core_users:
+                user = User(
+                    username=each,
+                    password='password'
+                )
+                db.session.add(user)
             db.session.commit()
 
         return app

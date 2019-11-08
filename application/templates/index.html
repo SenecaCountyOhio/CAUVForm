@@ -11,12 +11,10 @@
   <p> APP#: {{ app.AG_APP }}</p>
   <p> Total Deed Acres: {{ app.Parcels_Combined_Acres }}</p>
     <form method="post">
-      {{ form.Parcel_Change_Check.label }}
+      {{ item5_dict['Parcel_Change_Check'][4] }}
       {% for subfield in form.Parcel_Change_Check %}
-      <div>
-      {{ subfield(required="") }}
-      {{ subfield.label }}
-      </div>
+        {{ subfield(required="") }}
+        {{ subfield.label }}
       {% endfor %}
       <div>
       {{ form.Parcel_Change_Note.label }}
@@ -43,27 +41,25 @@
           <td> Current </td>
         </tr>
         {% for each in income_dict %}
-          <tr>
-          {% for items in range(0,5) %}
-              <td>{{ income_dict[each][items][1] }}</td>
-              <td>{{ income_dict[each][items][0](class="form-control") }}</td>
+        <tr>
+          {% for item in income_dict[each] %}
+          <td> {{ income_dict[each][item][1] }}</td>
+          <td> {{ income_dict[each][item][3](class="form-control", value=income_dict[each][item][0]) }}</td>
           {% endfor %}
-          </tr>
+        </tr>
         {% endfor %}
       </table>
       <table>
         <tr>
           <th>Anticipated land use for the current year</th>
           <th>Previous Acres</th>
-          <th>Last submission</th>
           <th>Current Acres</th>
         </tr>
         {% for each in land_dict %}
         <tr>
           <td>{{ land_dict[each][4] }}</td>
           <td>{{ land_dict[each][1] }}</td>
-          <td>{{ land_dict[each][0] }}</td>
-          <td>{{ land_dict[each][3](class="form-control") }}</td>
+          <td>{{ land_dict[each][3](class="form-control", value=land_dict[each][0]) }}</td>
         </tr>
         {% endfor %}
       </table>

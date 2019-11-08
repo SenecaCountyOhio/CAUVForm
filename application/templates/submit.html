@@ -43,13 +43,13 @@
         </tr>
         {% for each in income_dict %}
           <tr>
-          {% for items in range(0,5) %}
-            {% if income_dict[each][items][0] != income_dict[each][items][1] %}
-            <td class="flagged">{{ income_dict[each][items][0] }}</td>
+          {% for items in income_dict[each] %}
+            {% if income_dict[each][items][1] != income_dict[each][items][2] %}
             <td class="flagged">{{ income_dict[each][items][1] }}</td>
+            <td class="flagged">{{ income_dict[each][items][2] }}</td>
             {% else %}
-            <td>{{ income_dict[each][items][0] }}</td>
             <td>{{ income_dict[each][items][1] }}</td>
+            <td>{{ income_dict[each][items][2] }}</td>
             {% endif %}
           {% endfor %}
           </tr>
@@ -59,7 +59,6 @@
         <tr>
           <th>Anticipated land use for the current year</th>
           <th>Previous Acres</th>
-          <th>Last submission</th>
           <th>Current Acres</th>
         </tr>
         {% for each in land_dict %}
@@ -67,12 +66,10 @@
           {% if land_dict[each][1] == land_dict[each][2] %}
             <td>{{ land_dict[each][4] }}</td>
             <td>{{ land_dict[each][1] }}</td>
-            <td>{{ land_dict[each][0] }}</td>
             <td>{{ land_dict[each][2] }}</td>
           {% else %}
             <td class="flagged">{{ land_dict[each][4] }}</td>
             <td class="flagged">{{ land_dict[each][1] }}</td>
-            <td class="flagged">{{ land_dict[each][0] }}</td>
             <td class="flagged">{{ land_dict[each][2] }}</td>
           {% endif %}
         </tr>
