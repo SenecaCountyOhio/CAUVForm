@@ -8,8 +8,7 @@
   <div class="form-container-large">
   <img src="{{ url_for('static', filename='images/SenecaCountyBWseal_CLEAR_BACKGROUND.png')}}" alt="">
   <h1>CAUV Renewal Application Form</h1>
-  {% if new_app == '' %}
-  {% else %}
+  {% if new_app != None %}
   <span class="flagged">
     This application was last submitted on :
     {{ new_app.date_added }}

@@ -82,7 +82,10 @@ def income(form, app_num):
             temp_list = []
             for model in model_dict:
                 obj = model_dict[model]
-                temp_list.append(getattr(obj, each))
+                if obj is None:
+                    temp_list.append('')
+                else:
+                    temp_list.append(getattr(obj, each))
             row_dict[row][each] = temp_list
     return row_dict
 
