@@ -117,6 +117,9 @@ def fillform(id):
     app_num = id
     form = CAUVForm()
     app = PreviousCAUVApp.query.filter(PreviousCAUVApp.AG_APP == id).first()
+    new_app = CAUVApp.query.filter(
+        CAUVApp.AG_APP == id
+    ).first()
     item5_dict = item5(
         form=CAUVForm(),
         app_num=app_num,
@@ -178,6 +181,7 @@ def fillform(id):
     return render_template(
         'index.html',
         app=app,
+        new_app=new_app,
         form=form,
         item5_dict=item5_dict,
         land_dict=land_dict,
