@@ -55,13 +55,15 @@
         <tr>
           <th>Anticipated land use for the current year</th>
           <th>Previous Acres</th>
+          <th>Last submission</th>
           <th>Current Acres</th>
         </tr>
         {% for each in land_dict %}
         <tr>
-          <td>{{ land_dict[each][2] }}</td>
+          <td>{{ land_dict[each][4] }}</td>
+          <td>{{ land_dict[each][1] }}</td>
           <td>{{ land_dict[each][0] }}</td>
-          <td>{{ land_dict[each][1](class="form-control") }}</td>
+          <td>{{ land_dict[each][3](class="form-control") }}</td>
         </tr>
         {% endfor %}
       </table>
