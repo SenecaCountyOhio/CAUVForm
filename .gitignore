@@ -4,3 +4,4 @@ env_pc
 *.sqlite3
 ignore
 *.csv
+secret.py

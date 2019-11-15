@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
+from .secret import secret_key
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -10,6 +11,7 @@ def create_app():
     """Construct the core application."""
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///CAUVForm.sqlite3'
+    app.config['SECRET_KEY'] = secret_key
     db.init_app(app)
     login_manager.init_app(app)
 
